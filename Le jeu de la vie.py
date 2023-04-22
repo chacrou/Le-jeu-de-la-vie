@@ -1,10 +1,12 @@
 """
 The code can be optimised and you can add simples features
 """
+#Import modules
 import pygame
 import keyboard
 import time
 
+#Declare variables
 running = True
 debut = True
 #Images size = 16x16
@@ -14,6 +16,7 @@ alive = pygame.image.load(alive_png)
 dead = pygame.image.load(dead_png)
 icone = pygame.image.load('assets\icone.jpg')
 
+#Init pygame and creation of the window
 pygame.init()
 screen = pygame.display.set_mode((1080, 720), pygame.RESIZABLE)
 pygame.display.set_caption("Le jeu de la vie")
@@ -23,6 +26,7 @@ x_max = x_max // 16
 y_max = y_max // 16
 
 
+#An object cell
 class Cell:
     global cells
     global screen
@@ -44,7 +48,7 @@ class Cell:
         pygame.display.flip()
     
 
-    def generation(self, test = ''):
+    def generation(self):
         alive_cells_around = 0
         try:
             if cells[self.x - 1, self.y - 1].statut == 'alive':
@@ -113,7 +117,7 @@ class Cell:
         if self.statut == 'alive':
             screen.blit(alive, (self.x * 16, self.y * 16))
 
-
+#Creation of the good numbers of cells
 def creation(x_max, y_max):
     x = 0
     y = 0
@@ -131,7 +135,10 @@ def creation(x_max, y_max):
     return cells
 
 cells = creation(x_max, y_max)
+
+#Program loop
 while running:
+    #Edit mode
     while debut:
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -153,10 +160,12 @@ while running:
                 debut = False
             if keyboard.is_pressed("a"):
                 debut = False
+    #Check if the window closes
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             print('Fermeture du programme...')
             running = False
+    #Generate the next composition
     x = 0
     y = 0
     for a in range(len(cells)):
@@ -165,6 +174,8 @@ while running:
         if x == x_max:
             x = 0
             y += 1
+    
+    #Refresh the screen
     x = 0
     y = 0
     for a in range(len(cells)):
@@ -175,6 +186,8 @@ while running:
             y += 1
     time.sleep(1)
     pygame.display.flip()
+    #You can return in the edit mode if you hold "e"
     if keyboard.is_pressed("e"):
         debut = True
+#Close the program and the window
 pygame.quit()
