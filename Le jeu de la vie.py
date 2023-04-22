@@ -1,3 +1,6 @@
+"""
+The code can be optimised and you can add simples features
+"""
 import pygame
 import keyboard
 import time
@@ -132,7 +135,7 @@ while running:
     while debut:
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
-                c_x, c_y = event.pos #coordonnées du clique
+                c_x, c_y = event.pos #coordonnÃ©es du clique
                 c_x = c_x // 16
                 c_y = c_y // 16
                 button = event.button
